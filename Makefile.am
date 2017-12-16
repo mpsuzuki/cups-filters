@@ -475,19 +475,17 @@ EXTRA_DIST += \
 	fontembed/README
 
 pkgfilter_PROGRAMS =
-pkgfilterdir = $(CUPS_SERVERBIN)/filter
 
 # ===========
 # PDF to OPVP
 # ===========
-if ENABLE_OPVP
+pkgfilterdir = $(CUPS_SERVERBIN)/filter
 if ENABLE_POPPLER
 pkgfilter_PROGRAMS += \
 	pdftoopvp
 
 pkgfontconfigdir = $(sysconfdir)/$(FONTDIR)
 pkgfontconfig_DATA = filter/pdftoopvp/99pdftoopvp.conf
-endif
 endif
 EXTRA_DIST += filter/pdftoopvp/99pdftoopvp.conf
 
