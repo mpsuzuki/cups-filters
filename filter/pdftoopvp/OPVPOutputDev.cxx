@@ -9,7 +9,7 @@
 
 #include <config.h>
 #ifdef HAVE_CPP_POPPLER_VERSION_H
-#include "cpp/poppler-version.h"
+#include "poppler-version.h"
 #endif
 
 #ifdef USE_GCC_PRAGMAS

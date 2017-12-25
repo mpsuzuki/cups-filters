@@ -12,7 +12,7 @@
 
 #include <string.h>
 #ifdef HAVE_CPP_POPPLER_VERSION_H
-#include "cpp/poppler-version.h"
+#include "poppler-version.h"
 #endif
 #include "goo/gmem.h"
 #include "splash/SplashPattern.h"

@@ -14,7 +14,7 @@
 #include <ctype.h>
 #include <math.h>
 #ifdef HAVE_CPP_POPPLER_VERSION_H
-#include "cpp/poppler-version.h"
+#include "poppler-version.h"
 #endif
 #include "goo/GooString.h"
 #define GSTRING_H // for old GooString.h
