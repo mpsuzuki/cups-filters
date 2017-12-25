@@ -12,7 +12,7 @@
 #endif
 
 #ifdef HAVE_CPP_POPPLER_VERSION_H
-#include "cpp/poppler-version.h"
+#include "poppler-version.h"
 #endif
 #include "splash/SplashTypes.h"
 #include "splash/SplashState.h"

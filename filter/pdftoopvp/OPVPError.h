@@ -32,7 +32,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <stdarg.h>
 #include <Error.h>
 #ifdef HAVE_CPP_POPPLER_VERSION_H
-#include "cpp/poppler-version.h"
+#include "poppler-version.h"
 #endif
 
 #if POPPLER_VERSION_MAJOR > 0 || POPPLER_VERSION_MINOR >= 19
