@@ -45,11 +45,52 @@ AM_CONDITIONAL(ENABLE_POPPLER, test x$enable_poppler = xyes)
 if test x$enable_poppler = xyes; then
 	PKG_CHECK_MODULES([POPPLER], [poppler >= 0.18], [
 		PKG_CHECK_MODULES([POPPLER_CPP], [poppler-cpp >= 0.18], [
-			AC_CHECK_HEADER([poppler/cpp/poppler-version.h],[AC_DEFINE([HAVE_CPP_POPPLER_VERSION_H],[],[Define if you have Poppler's "cpp/poppler-version.h" header file.])
+			orig_CFLAGS="${CFLAGS}"
+			orig_CPPFLAGS="${CPPFLAGS}"
+			expanded_poppler_cpp_flags=`env PKG_CONFIG_TOP_BUILD_DIR=. ${PKG_CONFIG} poppler-cpp --cflags`
+			CFLAGS="${CFLAGS} ${expanded_poppler_cpp_flags}"
+			CPPFLAGS="${CPPFLAGS} ${expanded_poppler_cpp_flags}"
+			AC_CHECK_HEADER([poppler-version.h],[
+				AC_DEFINE([HAVE_CPP_POPPLER_VERSION_H],[],[Define if you have poppler-cpp's poppler-version.h header file.])
 			],[AC_MSG_ERROR([Could not identify the version of poppler-cpp])])
-			],[AC_MSG_ERROR([poppler-cpp's "cpp/poppler-version.h" is needed.])
+			],[AC_MSG_ERROR([poppler-cpp's poppler-version.h is needed.])
+			CFLAGS="${orig_CFLAGS}"
+			CPPFLAGS="${orig_CPPFLAGS}"
 		])
 	], [])
+
+	use_uninstalled_poppler=`${PKG_CONFIG} poppler --uninstalled && echo yes || echo no`
+	AM_CONDITIONAL(USE_POPPLER_UNINSTALLED, test x"${use_uninstalled_poppler}" = "xyes")
+	POPPLER_SRC_CFLAGS=""
+	poppler_srcdir=""
+	if test x"${use_uninstalled_poppler}" = "xyes"; then
+		AC_MSG_CHECKING([for built-but-uninstalled poppler directry])
+		poppler_config_h_dir=`env PKG_CONFIG_TOP_BUILD_DIR=. ${PKG_CONFIG} poppler --cflags | sed 's@^-I@@'`
+		poppler_top_builddir=`dirname ${poppler_config_h_dir}`
+		if test ! -r ${poppler_top_builddir}/Makefile ; then
+			AC_MSG_ERROR([failed, no Makefile in builddir?])
+		else
+			AC_MSG_RESULT([${poppler_top_builddir}])
+			AC_MSG_CHECKING([for source directry in ${poppler_top_builddir}])
+			# now official poppler dropped autotool, so try cmake value for first
+			cmake_source_dir=`make -C ${poppler_top_builddir} -p -n -i 2>/dev/null |  sed -n '/^CMAKE_SOURCE_DIR/p;/^CMAKE_SOURCE_DIR/q' | sed 's/^CMAKE_SOURCE_DIR = //'`
+			if test x"${cmake_source_dir}" != x; then
+				poppler_srcdir="${cmake_source_dir}"
+				AC_MSG_RESULT([${poppler_srcdir} (by cmake Makefile)])
+			else
+				poppler_srcdir=`make -C ${poppler_top_builddir} -p -n -i 2>/dev/null | sed -n '/^abs_top_srcdir/p;/^abs_top_srcdir/q' | sed 's/^abs_top_srcdir = //'`
+				if test x"${poppler_srcdir}" = x; then
+					AC_MSG_ERROR([failed, non-cmake and non-autoconf Makefile?])
+				else
+					AC_MSG_RESULT([\"${poppler_srcdir}\" (by autoconf Makefile)])
+				fi
+			fi
+		fi
+	fi
+	if test x"${poppler_srcdir}" != x; then
+		POPPLER_SRC_CFLAGS="-I${poppler_srcdir}/poppler -I${poppler_srcdir}"
+	fi
+	AC_SUBST(POPPLER_SRC_CFLAGS)
 fi
 
 # ================================
