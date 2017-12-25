@@ -51,13 +51,22 @@ if test x$enable_poppler = xyes; then
 			CFLAGS="${CFLAGS} ${expanded_poppler_cpp_flags}"
 			CPPFLAGS="${CPPFLAGS} ${expanded_poppler_cpp_flags}"
 			AC_CHECK_HEADER([poppler-version.h],[
-				AC_DEFINE([HAVE_CPP_POPPLER_VERSION_H],[],[Define if you have poppler-cpp's poppler-version.h header file.])
+				AC_DEFINE([HAVE_CPP_POPPLER_VERSION_H],[1],[Define if you have poppler-cpp's poppler-version.h header file.])
 			],[AC_MSG_ERROR([Could not identify the version of poppler-cpp])])
 			],[AC_MSG_ERROR([poppler-cpp's poppler-version.h is needed.])
 			CFLAGS="${orig_CFLAGS}"
 			CPPFLAGS="${orig_CPPFLAGS}"
 		])
 	], [])
+
+	PKG_CHECK_MODULES([POPPLER], [poppler >= 0.60.2], [
+		# just after poppler-0.60.1, poppler-config.h never defines HAVE_FREETYPE_H
+		# because cmake deals it as mandatory.
+		poppler_0_60_2_or_later="yes"
+		AC_DEFINE([HAVE_FREETYPE_H],[1],[Define here if poppler is too new to disable it.])
+	],[
+		poppler_0_60_2_or_later="no"
+	])
 
 	use_uninstalled_poppler=`${PKG_CONFIG} poppler --uninstalled && echo yes || echo no`
 	AM_CONDITIONAL(USE_POPPLER_UNINSTALLED, test x"${use_uninstalled_poppler}" = "xyes")
@@ -147,7 +156,7 @@ AC_ARG_WITH([jpeg],
 	[with_jpeg=yes]
 )
 AS_IF([test x"$with_jpeg" != "xno"], [
-	AC_DEFINE([HAVE_LIBJPEG], [], [Defines if we provide jpeg library.])
+	AC_DEFINE([HAVE_LIBJPEG], [1], [Defines if we provide jpeg library.])
 	AC_CHECK_HEADERS([jpeglib.h])
 	AC_SEARCH_LIBS([jpeg_destroy_decompress],
 		[jpeg],
@@ -164,7 +173,7 @@ AC_ARG_WITH([png],
 )
 AS_IF([test x"$with_png" != "xno"], [
 	PKG_CHECK_MODULES([LIBPNG], [libpng])
-	AC_DEFINE([HAVE_LIBPNG], [], [Defines if we provide png library.])
+	AC_DEFINE([HAVE_LIBPNG], [1], [Defines if we provide png library.])
 ])
 
 AC_ARG_WITH([tiff],
@@ -173,7 +182,7 @@ AC_ARG_WITH([tiff],
 	[with_tiff=yes]
 )
 AS_IF([test x"$with_tiff" != "xno"], [
-	AC_DEFINE([HAVE_LIBTIFF], [], [Defines if we provide tiff library.])
+	AC_DEFINE([HAVE_LIBTIFF], [1], [Defines if we provide tiff library.])
 	AC_CHECK_HEADERS([tiff.h])
 	AC_SEARCH_LIBS([TIFFReadScanline],
 		[tiff],
