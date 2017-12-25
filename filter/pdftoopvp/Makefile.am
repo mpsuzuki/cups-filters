@@ -36,12 +36,19 @@ pdftoopvp_SOURCES = \
 	OPVPOutputDev.cxx \
 	OPVPOutputDev.h \
 	pdftoopvp.cxx
+#
+# XXX: poppler-cpp header is just used to guess poppler's API set.
+#      so no need to consider POPPLER_CPP_LIBS to LIBS.
+#      this is not right design, it should be fixed in future.
+#
 pdftoopvp_CFLAGS = \
 	$(CUPS_CFLAGS) \
 	$(FREETYPE_CFLAGS) \
 	$(FONTCONFIG_CFLAGS) \
 	$(LIBPNG_CFLAGS) \
+	$(POPPLER_SRC_CFLAGS) \
 	$(POPPLER_CFLAGS) \
+	$(POPPLER_CPP_CFLAGS) \
 	-I$(srcdir)/oprs \
 	-I$(srcdir)/opvp
 pdftoopvp_CXXFLAGS = $(pdftoopvp_CFLAGS)
