@@ -22,6 +22,9 @@ matrix:
       compiler: gcc     
 addons:
   apt:
+    sources:
+      - sourceline: 'ppa:aacid/openjp2trusty'
+#      - sourceline: 'ppa:ricotz/testing'
     packages:
       - autoconf
       - automake
