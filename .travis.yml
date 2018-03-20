@@ -44,6 +44,7 @@ addons:
       - libpoppler-private-dev
       - libpoppler-cpp-dev
       - libqpdf-dev
+      - libijs-dev
       - libavahi-glib-dev
       - libavahi-common-dev
       - libavahi-client-dev
