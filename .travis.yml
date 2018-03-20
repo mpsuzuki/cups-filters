@@ -1,0 +1,48 @@
+language: cpp
+
+script:
+  - ./autogen.sh
+  - ./configure
+  - make V=1
+  - mkdir "$PWD/root"
+  - make DESTDIR="$PWD/root" install
+  - make dist
+
+#deploy:
+#  provider: releases
+#  skip_cleanup: true
+#  api_key: $GITHUB_TOKEN
+#  file_glob: true
+#  file: 'dist-archives/*.{tar.gz,tar.xz,zip}'
+#  on:
+
+matrix:
+  include:
+    - dist: trusty
+      compiler: gcc     
+addons:
+  apt:
+    sources:
+      - sourceline: 'ppa:aacid/openjp2trusty'
+      - sourceline: 'ppa:ricotz/testing'
+    packages:
+      - autoconf
+      - automake
+      - autotools-dev
+      - libtool
+      - libglib2.0-dev
+      - libfontconfig1-dev
+      - libcairo2-dev
+      - libjpeg-dev
+      - libpng-dev
+      - libtiff-dev
+      - liblcms2-dev
+      - libfreetype6-dev
+      - libopenjp2-7-dev
+      - libavahi-glib-dev
+      - libavahi-common-dev
+      - libavahi-client-dev
+#      - gobject-introspection
+#      - libgirepository1.0-dev
+#      - libgtk2.0-dev
+#      - gtk-doc-tools
