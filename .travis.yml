@@ -29,6 +29,7 @@ addons:
       - autoconf
       - automake
       - autotools-dev
+      - ghostscript
       - libtool
       - libglib2.0-dev
       - libfontconfig1-dev
