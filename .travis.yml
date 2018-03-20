@@ -40,6 +40,7 @@ addons:
       - libfreetype6-dev
       - libopenjp2-7-dev
       - libcups2-dev
+      - libqpdf-dev
       - libavahi-glib-dev
       - libavahi-common-dev
       - libavahi-client-dev
