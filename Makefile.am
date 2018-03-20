@@ -519,6 +519,7 @@ pdftoopvp_CFLAGS = \
 	$(FONTCONFIG_CFLAGS) \
 	$(LIBPNG_CFLAGS) \
 	$(POPPLER_CFLAGS) \
+	$(POPPLER_CPP_CFLAGS) \
 	-I$(srcdir)/filter/pdftoopvp/oprs \
 	-I$(srcdir)/filter/pdftoopvp/opvp
 pdftoopvp_CXXFLAGS = $(pdftoopvp_CFLAGS)
