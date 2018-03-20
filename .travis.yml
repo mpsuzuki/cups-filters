@@ -42,6 +42,7 @@ addons:
       - libfreetype6-dev
       - libopenjp2-7-dev
       - libcups2-dev
+      - libcupsimage2-dev
       - libpoppler-dev
       - libpoppler-private-dev
       - libpoppler-cpp-dev
