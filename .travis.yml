@@ -40,6 +40,9 @@ addons:
       - libfreetype6-dev
       - libopenjp2-7-dev
       - libcups2-dev
+      - libpoppler-dev
+      - libpoppler-private-dev
+      - libpoppler-cpp-dev
       - libqpdf-dev
       - libavahi-glib-dev
       - libavahi-common-dev
