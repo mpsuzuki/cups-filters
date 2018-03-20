@@ -23,7 +23,7 @@ matrix:
 addons:
   apt:
     sources:
-      - sourceline: 'ppa:aacid/openjp2trusty'
+#      - sourceline: 'ppa:aacid/openjp2trusty'
 #      - sourceline: 'ppa:ricotz/testing'
     packages:
       - autoconf
@@ -40,7 +40,7 @@ addons:
       - libtiff-dev
       - liblcms2-dev
       - libfreetype6-dev
-      - libopenjp2-7-dev
+#      - libopenjp2-7-dev
       - libcups2-dev
       - libcupsimage2-dev
       - libpoppler-dev
